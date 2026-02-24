@@ -15,7 +15,10 @@ app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-mongoose.connect('mongodb://127.0.0.1:27017/user');
+mongoose.connect(process.env.MONGO_URL)
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log(err));
+
 
 app.post('/register', (req, res) => {
     User.create(req.body)
@@ -54,6 +57,8 @@ app.get('/quiz', (req, res) => {
     res.json(quizdata)   
 })
 
-app.listen(3005, () => {
-    console.log("Server started on port 3005");
+const PORT = process.env.PORT || 3005;
+
+app.listen(PORT, () => {
+    console.log("Server started on port " + PORT);
 });
