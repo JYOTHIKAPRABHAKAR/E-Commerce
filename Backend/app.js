@@ -19,7 +19,6 @@ mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
 
-
 app.post('/register', (req, res) => {
     User.create(req.body)
     .then(user => res.json(user))
